@@ -1,10 +1,9 @@
 
 import string 
 
-"""
-Counts the words in a text string and counts them.
-"""
+
 def word_count(text: str) -> dict[str, int]:
+    """ Counts the words in a text string."""
     words = {}
     for word in text.split():
         word = word.lower().strip(string.punctuation)
@@ -16,10 +15,9 @@ def word_count(text: str) -> dict[str, int]:
             words[word] += 1
     return words
 
-"""
-Takes a dictionary of counted Strings, sorts them and returns the top n most common words from the text.
-"""
+
 def top_n(text: str, n: int) -> list[tuple[str, int]]:
+    """ Takes a dictionary of counted Strings, sorts them and returns the top n most common words from the text."""
     words = word_count(text)
     sorted_words = dict(sorted(words.items(), key=lambda item: (-item[1], item[0])))
     top_words = []
