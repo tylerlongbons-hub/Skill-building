@@ -1,4 +1,3 @@
-import pytest
 import word_counter as word_counter
 
 string1 = "The cat. the Dog!"
