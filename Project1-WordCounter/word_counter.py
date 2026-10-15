@@ -1,13 +1,13 @@
 
 import string 
 
-def word_count(text: string):
+def word_count(text: str) -> dict[str, int]:
     words = {}
     if len(text) == 0:
         return {}
     for word in text.split():
         word = word.lower().strip(string.punctuation)
-        if not word.isalpha():
+        if not word:
             continue
         if word not in words:
             words[word] = 1
@@ -15,7 +15,7 @@ def word_count(text: string):
             words[word] += 1
     return words
 
-def top_n(text: string, n: int ):
+def top_n(text: str, n: int) -> list[tuple[str, int]]:
     words = word_count(text)
     sorted_words = dict(sorted(words.items(), key=lambda item: (-item[1], item[0])))
     top_words = []
@@ -29,10 +29,7 @@ if __name__ == "__main__":
     string2 = "Tyler is super awesome! tyler is cool..."
     string3 = "How much wood could a woodchuck chuck if a woodchuck could chuck wood?????"
     dupe = " TYLER tyler, cool cool"
-    #word_count(string1)
     top = top_n(string3, 3)
-    #print(top)
-    #print(top_n(dupe, 2))
-
+    nonwords = "tyler ain't not cool"
     weird = "hello world\nhello"
-    print(top_n(string3, 3))
+    print(top_n(nonwords, 3))
