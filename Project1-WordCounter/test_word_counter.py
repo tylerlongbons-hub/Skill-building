@@ -16,6 +16,8 @@ weird = "hello world\nhello"
 weird_set = {"hello": 2, "world": 1}
 nonwords = "tyler ain't not cool"
 nonwords_set = [("ain't", 1), ("cool", 1), ("not", 1)]
+onlypunct = "hi -- there"
+onlypunct_set = [("hi", 1), ("there", 1)]
 def test_word_count():
     assert word_counter.word_count(string1) == string1_dict
 
@@ -45,5 +47,8 @@ def test_top_n_3():
 def test_empty_text():
     assert word_counter.word_count("") == {}
 
-def test_nonword():
+def test_apostrophe():
     assert word_counter.top_n(nonwords, 3) == nonwords_set
+
+def test_only_punct():
+    assert word_counter.top_n(onlypunct, 2) == onlypunct_set
