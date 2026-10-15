@@ -28,12 +28,3 @@ def top_n(text: str, n: int) -> list[tuple[str, int]]:
             top_words.append((key, val))
     return top_words
 
-if __name__ == "__main__":
-    string1 = "The cat. the Dog!"
-    string2 = "Tyler is super awesome! tyler is cool..."
-    string3 = "How much wood could a woodchuck chuck if a woodchuck could chuck wood?????"
-    dupe = " TYLER tyler, cool cool"
-    top = top_n(string3, 3)
-    nonwords = "tyler ain't not cool"
-    weird = "hello world\nhello"
-    print(top_n(nonwords, 3))
