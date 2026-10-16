@@ -13,40 +13,59 @@ def test_init_no_balance():
     ba = BankAccount("Tyler")
     assert ba.balance == 0
 
-def test_init(account):
+def test_init(account: BankAccount):
     assert account.owner == "Tyler"
     assert account.balance == 1000
 
-def test_deposit(account):
-    account.deposit(100)
-    assert account.balance == 1100
+def test_deposit(account: BankAccount):
+    assert account.deposit(100) == 1100
 
-def test_withdraw(account):
-    account.withdraw(100)
-    assert account.balance == 900
+def test_withdraw(account: BankAccount):
+    assert account.withdraw(100) == 900
 
-def test_str(account):
-    assert str(account) == "Tyler: 1000"
+def test_str(account: BankAccount):
+    assert str(account) == "Tyler: 1000.00"
 
-def test_transfer(account, account2):
+def test_transfer(account: BankAccount, account2: BankAccount):
     account.transfer(account2, 100)
     assert account.balance == 900
     assert account2.balance == 1100
 
-def test_invalid_deposit(account):
+@pytest.mark.parametrize("amount", [0, -100, -0.55])
+def test_invalid_deposit(account: BankAccount, amount):
     with pytest.raises(ValueError):
-        account.deposit(-100)
+        account.deposit(amount)
 
-def test_negative_withdraw(account):
+@pytest.mark.parametrize("amount", [0, -100, -0.55])
+def test_negative_withdraw(account: BankAccount, amount):
     with pytest.raises(ValueError):
-        account.withdraw(-100)
+        account.withdraw(amount)
 
-def test_overdraw_withdraw(account):
+def test_overdraw_withdraw(account: BankAccount):
     with pytest.raises(ValueError):
         account.withdraw(2000)
 
-def test_invalid_transfer(account, account2):
+@pytest.mark.parametrize("amount", [0, -100, -0.55])
+def test_invalid_transfer(account: BankAccount, account2: BankAccount, amount):
     with pytest.raises(ValueError):
-        account.transfer(account2, -100)
+        account.transfer(account2, amount)
+        assert account.history == []
+        assert account2.history == []
+        assert account.balance == 1000
+        assert account2.balance == 1000
+
+def test_correct_history(account: BankAccount):
+    history = [("deposit", 100), ("withdraw", 50)]
+    account.deposit(100)
+    account.withdraw(50)
+    assert account.history == history 
+
+def test_history_transfer(account: BankAccount, account2: BankAccount):
+    account.transfer(account2, 100)
+    assert account.history == [("withdraw", 100)]
+    assert account2.history == [("deposit", 100)]
+
+def test_full_withdraw(account: BankAccount):
+    assert account.withdraw(1000) == 0
     
 
