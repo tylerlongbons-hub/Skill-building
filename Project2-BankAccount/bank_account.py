@@ -12,8 +12,7 @@ class BankAccount:
     def deposit(self, amount: float) -> float:
         """Deposit money into the account if it is greater than 0"""
         if amount <= 0:
-            print(f"You entered in an invalid amount of money ${amount}")
-            raise ValueError
+            raise ValueError(f"You entered in an invalid amount of money ${amount}")
         self.balance += amount
         self.history.append(("deposit", amount))
         return self.balance
@@ -21,8 +20,7 @@ class BankAccount:
     def withdraw(self, amount: float) -> float:
         """Withdraw money from the account as long as its greater than 0 and does not overdraw the balance"""
         if amount <= 0 or amount > self.balance:
-            print(f"You entered in an invalid amount of money or don't have enough to withdraw ${amount}")
-            raise ValueError
+            raise ValueError(f"You entered in an invalid amount of money or don't have enough to withdraw ${amount}")
         self.balance -= amount
         self.history.append(("withdraw", amount))
         return self.balance
@@ -37,8 +35,7 @@ class BankAccount:
             self.withdraw(amount)
             other.deposit(amount)
         else:
-            print(f"you do not have the funds to transfer {amount} to {other.owner}")
-            raise ValueError
+            raise ValueError(f"you do not have the funds to transfer {amount} to {other.owner}")
             
 
 
