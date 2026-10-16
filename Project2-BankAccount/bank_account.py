@@ -31,11 +31,8 @@ class BankAccount:
 
     def transfer(self, other: "BankAccount", amount: float):
         """Transfer money from one account to another by depositing into one account and withdrawing from the other"""
-        if self.balance - amount >= 0:
-            self.withdraw(amount)
-            other.deposit(amount)
-        else:
-            raise ValueError(f"you do not have the funds to transfer {amount} to {other.owner}")
+        self.withdraw(amount)
+        other.deposit(amount)
             
 
 
