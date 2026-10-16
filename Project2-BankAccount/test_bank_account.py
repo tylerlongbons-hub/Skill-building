@@ -24,7 +24,7 @@ def test_withdraw(account: BankAccount):
     assert account.withdraw(100) == 900
 
 def test_str(account: BankAccount):
-    assert str(account) == "Tyler: 1000.00"
+    assert str(account) == "Tyler: $1000.00"
 
 def test_transfer(account: BankAccount, account2: BankAccount):
     account.transfer(account2, 100)
@@ -49,10 +49,10 @@ def test_overdraw_withdraw(account: BankAccount):
 def test_invalid_transfer(account: BankAccount, account2: BankAccount, amount):
     with pytest.raises(ValueError):
         account.transfer(account2, amount)
-        assert account.history == []
-        assert account2.history == []
-        assert account.balance == 1000
-        assert account2.balance == 1000
+    assert account.history == []
+    assert account2.history == []
+    assert account.balance == 1000
+    assert account2.balance == 1000
 
 def test_correct_history(account: BankAccount):
     history = [("deposit", 100), ("withdraw", 50)]
@@ -67,5 +67,9 @@ def test_history_transfer(account: BankAccount, account2: BankAccount):
 
 def test_full_withdraw(account: BankAccount):
     assert account.withdraw(1000) == 0
+
+def test_transfer_short_funds(account, account2):
+    with pytest.raises(ValueError):
+            account.transfer(account2, 2000)
     
 
