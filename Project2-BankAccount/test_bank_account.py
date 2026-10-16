@@ -71,6 +71,9 @@ def test_full_withdraw(account: BankAccount):
 def test_transfer_short_funds(account, account2):
     with pytest.raises(ValueError):
             account.transfer(account2, 2000)
-    
+    assert account.history == []
+    assert account2.history == []
+    assert account.balance == 1000
+    assert account2.balance == 1000
     
 
